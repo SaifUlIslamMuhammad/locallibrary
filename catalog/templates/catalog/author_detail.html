@@ -1,0 +1,50 @@
+{% extends "base_generic.html" %}
+{% block sidebar %}
+	{{ block.super }}
+
+	{% if perms.catalog.change_author or perms.catalog.delete_author %}
+	<hr>
+	<ul class="sidebar-nav">
+	
+		{% if perms.catalog.change_author %}
+			<li><a href="{% url 'author-update' author.id %}">Update author</a></li>
+		{% endif %}
+		
+		{% if not book_set.all and perms.catalog.delete_author %}
+			<li><a href="{% url 'author-delete' author.id %}">Delete author</a></li>
+		{% endif %}
+		
+	</ul>
+	{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+  <h1>Author Name: {{ book.author }}</h1>
+
+  <!--<p><strong>Author:</strong> <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>-->
+  <p><strong>First Name:</strong> {{ author.first_name }}</p>
+  <p><strong>Last Name:</strong> {{ author.last_name }}</p>
+  <p><strong>Date of Birth:</strong> {{ author.date_of_birth|default:"" }}</p>
+  <p><strong>Date of Death:</strong> {{ author.date_of_death|default:"" }}</p>
+<!--
+	<div style="margin-left:20px;margin-top:20px">
+		<h4>Copies</h4>
+
+		{% for copy in book.bookinstance_set.all %}
+			<hr />
+			<p
+				class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+			{{ copy.get_status_display }}
+			</p>
+			{% if copy.status != 'a' %}
+			<p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+			{% endif %}
+			<p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+			<p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+		{% endfor %}
+	</div>
+-->  
+
+{% endblock %}
