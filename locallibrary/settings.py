@@ -125,4 +125,6 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+CSRF_TRUSTED_ORIGINS = ['https://saifulislammuhammad.pythonanywhere.com']
+}
 
